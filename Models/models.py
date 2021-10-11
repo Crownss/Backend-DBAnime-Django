@@ -40,7 +40,8 @@ class PostingModels(models.Model):
     img = models.ImageField(upload_to='posting/%Y/%m/%d/', null=True, blank=True)
     title = models.CharField(max_length=256, unique=True, null=True, blank=True)
     desc = models.CharField(max_length=70, null=True, blank=True)
-    description = models.CharField(max_length=400, null=True, blank=True)
+    description = models.CharField(max_length=3000, null=True, blank=True)
+    link = models.CharField(max_length=500, null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
