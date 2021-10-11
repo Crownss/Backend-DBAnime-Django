@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .serializers import *
 from rest_framework import status
 from Models.models import *
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated, PermissionDenied
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
 
@@ -96,12 +96,32 @@ class PostingViewSet(ViewSet):
     def post(self, request):
         if request.user.is_authenticated:
             user = request.user
+            admin_check = User.objects.filter(username=user.username).first()
+            if admin_check.is_superuser != True:
+                raise PermissionDenied
+            posting_serializers = PostingSerializers(data={'author':request.username, 'img':request.data['img'], 'title':request.data['title'], 'desc':request.data['desc'], 'description':request.data['description']})
+            if posting_serializers.is_valid():
+                posting_serializers.save()
+                return Response({'message':'posted !'},status=status.HTTP_201_CREATED)
+            return Response({'message':posting_serializers.error_messages},status=status.HTTP_400_BAD_REQUEST)
+        raise NotAuthenticated('loggin first !')
     def update(self, request):
         if request.user.is_authenticated:
             user = request.user
     def delete(self, request):
         if request.user.is_authenticated:
             user = request.user
+            admin_check = User.objects.filter(username=user.username).first()
+            if admin_check.is_superuser != True:
+                raise PermissionDenied
+            query = request.GET.get('postid')
+            if query:
+                posting_models = PostingModels.objects.filter(id=query)
+                if posting_models != None & 0:
+                    return Response({'data':posting_models.values().first()},status=status.HTTP_200_OK)
+                raise Response({'message':'not found any data with id: '+ query},status=status.HTTP_404_NOT_FOUND)
+        raise NotAuthenticated('loggin first !')
+
 
 class CommentViewSet(ViewSet):
     def get(self, request):

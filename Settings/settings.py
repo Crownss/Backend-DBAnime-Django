@@ -149,9 +149,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'SocialTrade.wsgi.application'
+WSGI_APPLICATION = 'Settings.wsgi.application'
 
-ASGI_APPLICATION = 'SocialTrade.asgi.application'
+ASGI_APPLICATION = 'Settings.asgi.application'
 
 
 # Database
