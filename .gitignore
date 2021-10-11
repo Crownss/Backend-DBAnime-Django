@@ -1,0 +1,10 @@
+.env
+/SocialTrade/__pycache__
+/Models/__pycache__
+/Models/migrations/__pycache__
+/Controllers/__pycache__
+/Routers/__pycache__
+/AdminPages/__pycache__
+/media
+/ViewSets/__pycache__
+/.vscode
