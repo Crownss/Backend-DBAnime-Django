@@ -48,7 +48,10 @@ EMAIL_HOST_PASSWORD = getenv('EMAIL_HOST_PASSWROD')
 ########################### IMPORTANT ! #####################################
 ############################# SECURITY PAGE #################################
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('SECRET_KEY') #'django-insecure-3o=)o_b9a-uofrjlk(a#%k*i25e@#u7emvfsyj#%e%_@=*)9b$'
+
+#generate it from generate-secret-key.py
+SECRET_KEY = getenv('SECRET_KEY')
+#generate it from generate-secret-key.py
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # LOGIN_REDIRECT_URL = '/' #your url when logged in and will be redirect to
@@ -109,7 +112,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ##################################
     'Models',
-    'ModelsAdmin',
     'Controllers',
     'ViewSets',
     'Routers',

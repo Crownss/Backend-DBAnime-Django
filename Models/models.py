@@ -2,9 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 
-
-################# Begin with Model USERS #####################
-
+##################################################################################################
 class User(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
     email = models.EmailField(verbose_name='email', max_length=100, unique=True)
@@ -63,4 +61,4 @@ class CommentModels(models.Model):
         return self.username
     class Meta:
         db_table = 'Comment'
-##################### End with Model USERS #####################
+##################################################################################################

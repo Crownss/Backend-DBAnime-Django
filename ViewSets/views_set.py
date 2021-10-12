@@ -1,9 +1,6 @@
-from rest_framework.generics import ListAPIView
-from rest_framework.response import Response
-from Controllers.serializers import FollowSerializers, UsersSerializers
+from Controllers.serializers import *
 from rest_framework.viewsets import ModelViewSet
 from Models.models import *
-from rest_framework import permissions
 
 
 class UsersViewSet(ModelViewSet):
