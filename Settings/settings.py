@@ -115,6 +115,7 @@ INSTALLED_APPS = [
     'Controllers',
     'ViewSets',
     'Routers',
+    'Helpers',
     ##################################
     'corsheaders',
     'rest_framework',
