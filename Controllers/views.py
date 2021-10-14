@@ -1,17 +1,14 @@
 from django.contrib.auth import login, logout
-from django.core.exceptions import BadRequest
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from .serializers import *
 from rest_framework import status
 from Models.models import *
-from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated, NotFound, PermissionDenied
+from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated, NotFound, PermissionDenied, ValidationError
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
 from Helpers import get_client_ip
-
-
-
+########################################################################################################
 
 class RegisterViewSet(ViewSet):
 
@@ -21,7 +18,7 @@ class RegisterViewSet(ViewSet):
         serializer = UsersSerializers(data={'username':request.data['username'], 'email':request.data['email'], 'password':request.data['password'], 'verif_password':request.data['verif_password'], 'ip_address':get_client_ip(request)})
         if serializer.is_valid():
             if request.data['password'] != request.data['verif_password']:
-                raise BadRequest("password does'nt match !")
+                raise ValidationError("password does'nt match !")
             serializer.save()
             return Response(
                 {
@@ -29,7 +26,7 @@ class RegisterViewSet(ViewSet):
                 },
                 status=status.HTTP_202_ACCEPTED
             )
-        raise BadRequest
+        raise ValidationError
 
 class LoginViewSet(ViewSet):
 
@@ -102,7 +99,7 @@ class PostingViewSet(ViewSet):
             if posting_serializers.is_valid():
                 posting_serializers.save()
                 return Response({'message':'posted !'},status=status.HTTP_201_CREATED)
-            raise BadRequest('something wrong with your request !')
+            raise ValidationError
         raise NotAuthenticated('loggin first !')
 
     def update(self, request):
@@ -155,7 +152,7 @@ class CommentViewSet(ViewSet):
             if comment_serializers.is_valid():
                 comment_serializers.save()
                 return Response({'message':'success comment !'},status=status.HTTP_201_CREATED)
-            raise BadRequest('something wrong with your request !')
+            raise ValidationError
         # comment_serializers = CommentSerializers(data={'username':request.data['username'], 'comment':request.data['comment'], 'toPost':None, 'ip_address':get_client_ip(request)})
         # if comment_serializers.is_valid():
         #     comment_serializers.save()
