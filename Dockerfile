@@ -1,8 +1,8 @@
 FROM python:3.9-slim
 
-WORKDIR /socialtrade
+WORKDIR /DBAnime
 
-COPY . /socialtrade/
+COPY . /DBAnime/
 
 #let this alone
 ENV PYTHONUNBUFFERED=1
@@ -38,8 +38,6 @@ RUN python manage.py migrate
 
 RUN python manage.py collectstatic
 
-# RUN chmod +x ./create_superuser
-
 RUN sh create_superuser.sh
 
-ENTRYPOINT [ "gunicorn", "--preload", "-t", "3", "--worker-class=gevent", "--worker-connections=1000", "-w", "5", "--threads", "5", "SocialTrade.wsgi" ]
+ENTRYPOINT [ "gunicorn", "--preload", "-t", "3", "--worker-class=gevent", "--worker-connections=1000", "-w", "5", "--threads", "5", "Settings.wsgi" ]
